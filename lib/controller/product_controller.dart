@@ -4,37 +4,35 @@ import 'package:demo/utils/save_data_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class ProductListController extends ChangeNotifier {
+class ProductListController with ChangeNotifier {
   var productListController = ProductListModel();
 
   String? token;
 
   Future<ProductListModel?> fetchProductList() async {
-    MyPrefs.getAuthCode().then((value) {
+  await  MyPrefs.getAuthCode().then((value) {
       token = value;
       print("TOKEN __$value");
+      notifyListeners();
     });
-
+    Map<String, String> headers = {
+      'Authorization': "Bearer $token",
+      'Content-Type': 'application/json'
+    };
     var response = await http.get(
       Uri.parse(
         "${ApiServices.BASE_URl}products",
       ),
-        headers: {
-        'Authorization': 'Bearer' + token.toString(),
-          "Content-Type": "application/json",
-        }
+      headers: headers,
     );
     if (response.statusCode == 200) {
-      productListController = productListModelFromJson(response.body);
-
-      print("Response ___${productListController}");
-      print("Response ___${response.body}");
       notifyListeners();
+
+      productListController = productListModelFromJson(response.body);
     } else {
       return null;
     }
-    notifyListeners();
+notifyListeners();
     return productListController;
   }
-
 }

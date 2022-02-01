@@ -1,5 +1,9 @@
+import 'package:buttons_tabbar/buttons_tabbar.dart';
+import 'package:demo/component/instock_page.dart';
+import 'package:demo/component/out_of_stock.dart';
 import 'package:demo/controller/product_controller.dart';
 import 'package:demo/model/product_list_model.dart';
+import 'package:demo/screen/product_page.dart';
 import 'package:demo/screen/product_details_page.dart';
 import 'package:demo/utils/save_data_screen.dart';
 import 'package:flutter/material.dart';
@@ -13,14 +17,17 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
-  String? token;
+
+
+  @override
+  void initState() {
+
+    super.initState();
+  }
   String? searchData;
-  
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<ProductListController>(context, listen: false)
-        .fetchProductList();
 
 
 
@@ -61,16 +68,15 @@ class _HomepageState extends State<Homepage> {
         ],
       ),
       drawer: Drawer(),
-      body: ListView(
-        shrinkWrap: true,
-        primary: false,
+      body:
+      Column(
         children: [
-          SizedBox(
-            height: 20,
-          ),
+          SizedBox(height: 10.0,),
+
           Padding(
-            padding: const EdgeInsets.only(left: 18.0, right: 18),
+            padding: const EdgeInsets.only(left: 18.0, right: 28),
             child: Container(
+              height: 50,
               child: TextField(
                 onChanged: (value) {
                   setState(() {
@@ -79,194 +85,57 @@ class _HomepageState extends State<Homepage> {
                 },
                 decoration: InputDecoration(
                     hintText: "Search Product",
+                    contentPadding: EdgeInsets.only(left: 15,top: 10,bottom: 10),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20.0),
+                      borderRadius: BorderRadius.circular(15.0),
                     )),
               ),
             ),
           ),
-          SizedBox(
-            height: 30,
-          ),
-          Container(
-            child: Consumer<ProductListController>(builder: (_, data, child) {
-              return data.productListController.payload != null
-                  ? ListView.builder(
-                      shrinkWrap: true,
-                      primary: false,
-                      itemCount: data.productListController.payload!.length,
-                      itemBuilder: (_, index) {
-                        var dataList =
-                            data.productListController.payload![index];
+SizedBox(height: 10.0,),
+          Expanded(
+            child: DefaultTabController(
+              length: 3,
+              child: Scaffold(
+                appBar:  AppBar(
+                  toolbarHeight: 10,
+                  backgroundColor: Colors.white,
+                  elevation: 0,
+                  bottom: ButtonsTabBar(
+                 //   center: true,
+                    buttonMargin: EdgeInsets.only(left: 20),
+                    contentPadding: EdgeInsets.only(left: 15,right: 15),
+                    radius: 10.0,
+                    backgroundColor: Colors.blue,
+                    unselectedBackgroundColor: Colors.grey[300],
+                    unselectedLabelStyle: TextStyle(color: Colors.black),
+                    labelStyle:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                    tabs: [
+                      Tab(
+                        text: "All",
 
-                        if(searchData== "" || searchData==null){
-                          return  InkWell(
-                            onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (_)=> ProductDetailsPage(
-                                name: dataList.name,
-                                image: dataList.imageUrl,
-                                sku: dataList.sku,
-                              )));
-                            },
-                            child: Card(
-                              elevation: 1,
-                              child: Container(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 18.0, right: 18.0),
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                       dataList.imageUrl!=null ?   Image.network(
-                                            "${dataList.imageUrl}",
-                                            height: 80,
-                                            width: 80,
-                                            fit: BoxFit.cover,
-                                          ) : Image.asset("assets/images/noimage.jpg",  height: 80,
-                                         width: 80,
-                                         fit: BoxFit.cover,),
-                                          Column(
-                                            children: [
-                                              Text(
-                                                "${dataList.name}",
-                                                style: TextStyle(
-                                                    fontSize: 17,
-                                                    color: Colors.black),
-                                              ),
-                                              SizedBox(
-                                                height: 10,
-                                              ),
-                                              Row(
-                                                children: [
-                                                  Text(
-                                                    "${dataList.sku}",
-                                                    style: TextStyle(
-                                                        fontSize: 17,
-                                                        color: Colors.black),
-                                                  ),
-                                                ],
-                                              ),
-                                              SizedBox(
-                                                height: 10,
-                                              ),
-                                              Text(
-                                                "${dataList.upc.toString()}",
-                                                style: TextStyle(
-                                                    fontSize: 17,
-                                                    color: Colors.black),
-                                              ),
-                                              SizedBox(
-                                                height: 10,
-                                              ),
-                                              Text(
-                                                "${dataList.availableQuantity}",
-                                                style: TextStyle(
-                                                    fontSize: 17,
-                                                    color: Colors.black),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          );
-                        }else {
-                          if(dataList.name!.toLowerCase().contains(searchData!.toLowerCase())){
-                            return InkWell(
-                              onTap: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (_)=> ProductDetailsPage(
-                                  name: dataList.name,
-                                  image: dataList.imageUrl,
-                                  sku: dataList.sku,
-                                )));
-                              },
-                              child: Card(
-                                elevation: 1,
-                                child: Container(
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 18.0, right: 18.0),
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Image.network(
-                                              "${dataList.imageUrl}",
-                                              height: 80,
-                                              width: 80,
-                                              fit: BoxFit.cover,
-                                            ),
-                                            Column(
-                                              children: [
-                                                Text(
-                                                  "${dataList.name}",
-                                                  style: TextStyle(
-                                                      fontSize: 17,
-                                                      color: Colors.black),
-                                                ),
-                                                SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    Text(
-                                                      "${dataList.sku}",
-                                                      style: TextStyle(
-                                                          fontSize: 17,
-                                                          color: Colors.black),
-                                                    ),
-                                                  ],
-                                                ),
-                                                SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Text(
-                                                  "${dataList.upc.toString()}",
-                                                  style: TextStyle(
-                                                      fontSize: 17,
-                                                      color: Colors.black),
-                                                ),
-                                                SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Text(
-                                                  "${dataList.availableQuantity}",
-                                                  style: TextStyle(
-                                                      fontSize: 17,
-                                                      color: Colors.black),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            );
-                          }
-                        }
-
-                        return Container();
-
-                      },
-                    )
-                  : Padding(
-                      padding: const EdgeInsets.only(top: 228.0),
-                      child: Center(
-                        child: Text(
-                          "No Product Found",
-                          style: TextStyle(fontSize: 20, color: Colors.black),
-                        ),
                       ),
-                    );
-            }),
+                      Tab(
+                        text: "In Stock",
+
+                      ),
+                      Tab(
+                        text: "Out Of Stock",
+                      ),
+
+                    ],
+                  ),
+                ),
+                body: TabBarView(children: [
+                  ProductPage(searchData: searchData,),
+                  InStockPage(searchData: searchData,),
+                  OutOfStockPage(searchData: searchData,),
+
+                ]),
+              ),
+
+            ),
           ),
         ],
       ),

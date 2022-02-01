@@ -19,8 +19,10 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        elevation: 0,
+        backgroundColor: Colors.white,
+        elevation: 4,
         iconTheme: IconThemeData(color: Colors.black),
         title: Text("${widget.name}",style: TextStyle(fontSize: 17,color: Colors.black),),
 
@@ -32,8 +34,17 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.network("${widget.image}",height: 200,width: double.infinity,fit: BoxFit.cover,),
-
+          //  Image.network("${widget.image}",height: 200,width: double.infinity,fit: BoxFit.cover,),
+            widget.image!=null ?   Image.network(
+              "${widget.image}",
+              height: 200,
+              width: double.infinity,
+              fit: BoxFit.fill,
+            ) : Image.asset("assets/images/noimage.jpg",
+              height: 200,
+              width: double.infinity,
+              fit: BoxFit.fill,
+            ),
             SizedBox(height: 20,),
 
             Padding(

@@ -76,12 +76,18 @@ class _LoginScreenState extends State<LoginScreen> {
               return   InkWell(
                 onTap: (){
 
-                  authLogin.loginData(userNameController.text, passwordController.text,);
 
-                  Navigator.push(context, MaterialPageRoute(builder: (_)=> Homepage()));
+                    authLogin.loginData(userNameController.text, passwordController.text,);
+
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Homepage()));
+
+
+
+
+
 
                 },
-                child: Padding(
+                child: authLogin.loader? Center(child: CircularProgressIndicator(color: Colors.blue,),): Padding(
                   padding: const EdgeInsets.only(left: 18.0,right: 18.0),
                   child: Container(
                     alignment: Alignment.center,

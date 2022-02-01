@@ -19,13 +19,13 @@ class ProductListModel {
     this.payloadType,
   });
 
-  bool ?success;
+  bool? success;
   String? requestTime;
   String ?responseTime;
-  String? requestUrl;
+  String ?requestUrl;
   List<String>? message;
   List<Payload>? payload;
-  String? payloadType;
+  String ? payloadType;
 
   factory ProductListModel.fromJson(Map<String, dynamic> json) => ProductListModel(
     success: json["success"],
@@ -87,25 +87,25 @@ class Payload {
     this.enableSerializedImageUpload,
   });
 
-  int? id;
-  bool? active;
+  int ?id;
+  bool ?active;
   bool ?deleted;
   DateTime? dateUpdated;
   String ?sku;
-  String? name;
-  Upc? upc;
-  Description? description;
+  String ?name;
+  Upc ?upc;
+  Description ?description;
   Type? type;
   bool ?hasVariants;
   int? assemblyId;
   int ?kitId;
-  int ?sellingPrice;
+  dynamic ?sellingPrice;
   int ?suggestedRetailPrice;
   double? cost;
-  int? availableQuantity;
-  int ?totalQuantity;
+  dynamic availableQuantity;
+  int? totalQuantity;
   int ?unitId;
-  UnitName ?unitName;
+  UnitName? unitName;
   int? weight;
   bool? taxable;
   bool ?dropShip;
@@ -116,7 +116,7 @@ class Payload {
   String ?customField5;
   String? customField6;
   String ?imageUrl;
-  bool ?useLotNumber;
+  bool? useLotNumber;
   bool ?useSerialNumber;
   bool ?useManufacturingSerialNumber;
   bool ?useSerialForReceive;
@@ -125,40 +125,40 @@ class Payload {
 
   factory Payload.fromJson(Map<String, dynamic> json) => Payload(
     id: json["id"],
-    active: json["active"],
-    deleted: json["deleted"],
-    dateUpdated: DateTime.parse(json["date_updated"]),
-    sku: json["sku"],
+    // active: json["active"],
+    // deleted: json["deleted"],
+    // dateUpdated: DateTime.parse(json["date_updated"]),
+ sku: json["sku"],
     name: json["name"],
-    upc: upcValues.map![json["upc"]],
-    description: descriptionValues.map![json["description"]],
-    type: typeValues.map![json["type"]],
-    hasVariants: json["has_variants"],
-    assemblyId: json["assembly_id"],
-    kitId: json["kit_id"],
-    sellingPrice: json["selling_price"],
-    suggestedRetailPrice: json["suggested_retail_price"],
-    cost: json["cost"].toDouble(),
+    //  upc: upcValues.map![json["upc"]],
+    //  description: descriptionValues.map![json["description"]],
+    //  type: typeValues.map![json["type"]],
+    //  hasVariants: json["has_variants"],
+    //  assemblyId: json["assembly_id"],
+    //  kitId: json["kit_id"],
+    //  sellingPrice: json["selling_price"],
+    // // suggestedRetailPrice: json["suggested_retail_price"],
+    //  //cost: json["cost"].toDouble(),
     availableQuantity: json["available_quantity"],
-    totalQuantity: json["total_quantity"],
-    unitId: json["unit_id"],
-    unitName: json["unit_name"] == null ? null : unitNameValues.map![json["unit_name"]],
-    weight: json["weight"],
-    taxable: json["taxable"],
-    dropShip: json["drop_ship"],
-    customField1: json["custom_field1"],
-    customField2: json["custom_field2"],
-    customField3: json["custom_field3"],
-    customField4: json["custom_field4"],
-    customField5: json["custom_field5"],
-    customField6: json["custom_field6"],
-    imageUrl: json["image_url"],
-    useLotNumber: json["use_lot_number"],
-    useSerialNumber: json["use_serial_number"],
-    useManufacturingSerialNumber: json["use_manufacturing_serial_number"],
-    useSerialForReceive: json["use_serial_for_receive"],
-    lotSerialEnabled: json["lot_serial_enabled"],
-    enableSerializedImageUpload: json["enable_serialized_image_upload"],
+    //  totalQuantity: json["total_quantity"],
+    //  unitId: json["unit_id"],
+    //  unitName: json["unit_name"] == null ? null : unitNameValues.map![json["unit_name"]],
+    //  weight: json["weight"],
+    //  taxable: json["taxable"],
+    //  dropShip: json["drop_ship"],
+    //  customField1: json["custom_field1"],
+    //  customField2: json["custom_field2"],
+    //  customField3: json["custom_field3"],
+    //  customField4: json["custom_field4"],
+    //  customField5: json["custom_field5"],
+    //  customField6: json["custom_field6"],
+    //  imageUrl: json["image_url"],
+    //  useLotNumber: json["use_lot_number"],
+    //  useSerialNumber: json["use_serial_number"],
+    //  useManufacturingSerialNumber: json["use_manufacturing_serial_number"],
+    //  useSerialForReceive: json["use_serial_for_receive"],
+    //  lotSerialEnabled: json["lot_serial_enabled"],
+    //  enableSerializedImageUpload: json["enable_serialized_image_upload"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -236,7 +236,7 @@ final upcValues = EnumValues({
 });
 
 class EnumValues<T> {
-  Map<String, T>? map;
+  Map<String, T> ?map;
   Map<T, String> ?reverseMap;
 
   EnumValues(this.map);
